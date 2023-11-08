@@ -324,10 +324,10 @@ export class OspfModel {
     }
 
     /**
-     * Převede celý OspfModel na MapaModel a vrátí jej
+     * Převede celý OspfModel na MapModel a vrátí jej
      * @return {MapModel}
      */
-    public getConvertedWholeModelToMapaModel(): MapModel {
+    public getConvertedWholeModelToMapModel(): MapModel {
         const mapModel: MapModel = new MapModel();
         let multilinkCount: number = 0;
         let cost1: number = 0;
