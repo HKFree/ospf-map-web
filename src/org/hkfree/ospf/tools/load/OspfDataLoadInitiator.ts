@@ -40,10 +40,7 @@ export class OspfDataLoadInitiator {
                 } else {
                     console.log("Error loading data from remote server, " + Constants.FILENAME_OSPF_DUMP + " not found in ZIP file");
                 }
-                // if (model.getRouters().isEmpty()) {
-                //     this.loadTopologyDataFromZipFile(model, zip);
-                //     this.loadNonTopologyDataFromZipFile(model, zip);
-                // }
+                await this.loadCostsDataFromZipFile(model, zip);
                 await this.loadNamesGeoDataFromZipFile(model, zip);
             } else {
                 console.log("Error loading data from remote server: " + response.status);
@@ -53,60 +50,32 @@ export class OspfDataLoadInitiator {
         }
     }
 
-    // /**
-    //  * Zpracuje soubor s topologií sítě ze ZIP souboru
-    //  * @param {OspfModel} model
-    //  * @param {ZipInputStream} zipInputStream
-    //  * @throws IOException
-    //  * @private
-    //  */
-    // /*private*/ loadTopologyDataFromZipFile(model: OspfModel, zipInputStream: ZipInputStream) {
-    //     let isr: InputStreamReader = null;
-    //     let inBfrdRdr: BufferedReader = null;
-    //     try {
-    //         isr = new InputStreamReader(zipInputStream);
-    //         inBfrdRdr = new BufferedReader(isr);
-    //         let entry: ZipEntry;
-    //         while(((entry = zipInputStream.getNextEntry()) != null)) {{
-    //             if (entry.getName() === Constants.FILENAME_TOPOLOGY){
-    //                 OspfLoader.loadTopology(model, inBfrdRdr);
-    //             }
-    //         }};
-    //     } finally {
-    //         if (inBfrdRdr != null)inBfrdRdr.close();;
-    //         if (isr != null)isr.close();;
-    //     }
-    // }
-    //
-    // /**
-    //  * Zpracuje soubory s cenami ,jmény a pozicemi routerů ze ZIP souboru
-    //  * @param {OspfModel} model
-    //  * @param {ZipInputStream} zipInputStream
-    //  * @throws IOException
-    //  * @private
-    //  */
-    // /*private*/ loadNonTopologyDataFromZipFile(model: OspfModel, zipInputStream: ZipInputStream) {
-    //     let isr: InputStreamReader = null;
-    //     let inBfrdRdr: BufferedReader = null;
-    //     try {
-    //         isr = new InputStreamReader(zipInputStream);
-    //         inBfrdRdr = new BufferedReader(isr);
-    //         let entry: ZipEntry;
-    //         while(((entry = zipInputStream.getNextEntry()) != null)) {{
-    //             if (!(entry.getName() === Constants.FILENAME_TOPOLOGY)){
-    //                 if (entry.getName() === Constants.FILENAME_ROUTER_NAMES){
-    //                 } else if (entry.getName() === Constants.FILENAME_GEO_POSITIONS){
-    //                 } else {
-    //                     OspfLoader.loadCosts(model, entry.getName(), inBfrdRdr);
-    //                 }
-    //             }
-    //         }};
-    //     } finally {
-    //         if (inBfrdRdr != null)inBfrdRdr.close();;
-    //         if (isr != null)isr.close();;
-    //     }
-    // }
-    //
+    /**
+     * Zpracuje soubory s cenami spojů z routerů ze ZIP souboru
+     * @param {OspfModel} model
+     * @param {ZipInputStream} zipInputStream
+     * @throws IOException
+     * @private
+     */
+    /*private*/ async loadCostsDataFromZipFile(model: OspfModel, zip: JSZip) {
+        const promises: Promise<string>[] = [];
+        const filenames: string[] = [];
+
+        zip.forEach(function (relativePath, file) {
+            promises.push(file.async("string"));
+            filenames.push(file.name);
+        });
+
+        const results = await Promise.all(promises);
+        for (let i = 0; i < results.length; i++) {
+            const filename = filenames[i];
+            const contents = results[i];
+            if (filename !== Constants.FILENAME_TOPOLOGY && filename !== Constants.FILENAME_ROUTER_NAMES && filename !== Constants.FILENAME_GEO_POSITIONS) {
+                OspfLoader.loadCosts(model, filename, new BufferedReader(new StringReader(contents)));
+            }
+        }
+    }
+
     /**
      * Zpracuje soubory s cenami ,jmény a pozicemi routerů ze ZIP souboru
      * @param {OspfModel} model
