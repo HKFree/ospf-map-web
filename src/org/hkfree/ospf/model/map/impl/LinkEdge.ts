@@ -3,6 +3,7 @@
 //import { MapGraphComponentMode } from '../../../setting/MapGraphComponentMode';
 import { AEdge } from './AEdge';
 import { IVertex } from '../IVertex';
+import { RouterVertex } from './RouterVertex';
 
 /**
  * Konstruktor
@@ -509,5 +510,4 @@ export class LinkEdge extends AEdge {
 
 
 
-import { RouterVertex } from './RouterVertex';
 

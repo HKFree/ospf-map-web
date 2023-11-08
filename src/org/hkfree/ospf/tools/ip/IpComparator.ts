@@ -42,12 +42,12 @@ export class IpComparator {
         let ip2_2: number;
         let ip2_3: number;
         let ip2_4: number;
-        const octets1: string[] = ip1.split("\\.");
+        const octets1: string[] = ip1.split(".");
         ip1_1 = IntegerHelper.valueOf(octets1[0]);
         ip1_2 = IntegerHelper.valueOf(octets1[1]);
         ip1_3 = IntegerHelper.valueOf(octets1[2]);
         ip1_4 = IntegerHelper.valueOf(octets1[3]);
-        const octets2: string[] = ip2.split("\\.");
+        const octets2: string[] = ip2.split(".");
         ip2_1 = IntegerHelper.valueOf(octets2[0]);
         ip2_2 = IntegerHelper.valueOf(octets2[1]);
         ip2_3 = IntegerHelper.valueOf(octets2[2]);

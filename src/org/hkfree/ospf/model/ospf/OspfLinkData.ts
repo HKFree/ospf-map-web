@@ -1,4 +1,5 @@
 /* Generated from Java with JSweet 3.1.0 - http://www.jsweet.org */
+import { Router } from './Router';
 /**
  * Třída představující účastněný router ve spoji a parametry této účasti
  * @author Jakub Menzel
@@ -56,5 +57,4 @@ export class OspfLinkData {
 
 
 
-import { Router } from './Router';
 

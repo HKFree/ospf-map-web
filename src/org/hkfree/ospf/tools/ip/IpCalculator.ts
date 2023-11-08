@@ -31,7 +31,7 @@ export class IpCalculator {
         let ip2: number;
         let ip3: number;
         let ip4: number;
-        const octets1: string[] = ip.split("\\.");
+        const octets1: string[] = ip.split(".");
         ip1 = IntegerHelper.valueOf(octets1[0]);
         ip2 = IntegerHelper.valueOf(octets1[1]);
         ip3 = IntegerHelper.valueOf(octets1[2]);
@@ -75,7 +75,7 @@ export class IpCalculator {
         let ip2: number;
         let ip3: number;
         let ip4: number;
-        const octets1: string[] = ip.split("\\.");
+        const octets1: string[] = ip.split(".");
         ip1 = IntegerHelper.valueOf(octets1[0]);
         ip2 = IntegerHelper.valueOf(octets1[1]);
         ip3 = IntegerHelper.valueOf(octets1[2]);
@@ -117,7 +117,7 @@ export class IpCalculator {
         let m2: number;
         let m3: number;
         let m4: number;
-        const octets1: string[] = mask.split("\\.");
+        const octets1: string[] = mask.split(".");
         m1 = IntegerHelper.valueOf(octets1[0]);
         m2 = IntegerHelper.valueOf(octets1[1]);
         m3 = IntegerHelper.valueOf(octets1[2]);
@@ -157,9 +157,9 @@ export class IpCalculator {
         if (na == null || ba == null){
             return false;
         }
-        const sas: string[] = search.split("\\.");
-        const nas: string[] = na.split("\\.");
-        const bas: string[] = ba.split("\\.");
+        const sas: string[] = search.split(".");
+        const nas: string[] = na.split(".");
+        const bas: string[] = ba.split(".");
         if (sas.length !== 4){
             return false;
         }
@@ -209,7 +209,7 @@ export class IpCalculator {
      */
     public static getIpFromIpArpa(ipArpa: string): string {
         let result: string = "";
-        const arpas: string[] = ipArpa.substring(0, ipArpa.indexOf(".in-addr.arpa.")).split("\\.");
+        const arpas: string[] = ipArpa.substring(0, ipArpa.indexOf(".in-addr.arpa.")).split(".");
         for(let i: number = 0; i < arpas.length; i++) {{
             result += arpas[arpas.length - i - 1] + ".";
         };}

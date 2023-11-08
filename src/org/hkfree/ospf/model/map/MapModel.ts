@@ -6,6 +6,11 @@ import { RouterVertex } from './impl/RouterVertex';
 import { OspfLinkData } from '../ospf/OspfLinkData';
 import { NeighbourCostAndLink } from '../../tools/NeighbourCostAndLink';
 import { GPSPoint } from '../../tools/geo/GPSPoint';
+import { IVertex } from './IVertex';
+import { IEdge } from './IEdge';
+import {java} from "j4ts";
+import List = java.util.List;
+import ArrayList = java.util.ArrayList;
 
 /**
  * Konstruktor - vytvoří instanci třídy
@@ -22,7 +27,7 @@ export class MapModel implements IMapModel {
         this.vertices = <any>(new ArrayList<IVertex>());
     }
 
-    public addLinkEdge$java_lang_String$java_lang_String$java_lang_String$java_lang_String$int$int$int$int$org_hkfree_ospf_tools_geo_GPSPoint$org_hkfree_ospf_tools_geo_GPSPoint$java_lang_String$java_lang_String$java_util_List(id1: string, id2: string, name1: string, name2: string, cost1: number, cost2: number, cost1IPv6: number, cost2IPv6: number, gpsP1: GPSPoint, gpsP2: GPSPoint, linkIDv4: string, linkIDv6: string, ospfLinksData: List<OspfLinkData>) {
+    public addLinkEdge$java_lang_String$java_lang_String$java_lang_String$java_lang_String$int$int$int$int$org_hkfree_ospf_tools_geo_GPSPoint$org_hkfree_ospf_tools_geo_GPSPoint$java_lang_String$java_lang_String$java_util_List(id1: string, id2: string, name1: string, name2: string, cost1: number, cost2: number, cost1IPv6: number, cost2IPv6: number, gpsP1: GPSPoint | null, gpsP2: GPSPoint | null, linkIDv4: string, linkIDv6: string, ospfLinksData: List<OspfLinkData>) {
         let rv1: RouterVertex | null = this.getRouterVertexById(id1);
         let rv2: RouterVertex | null = this.getRouterVertexById(id2);
         if (rv1 == null){
@@ -315,11 +320,4 @@ export class MapModel implements IMapModel {
 
 
 
-import { IVertex } from './IVertex';
-
-
-import { IEdge } from './IEdge';
-import {java} from "j4ts";
-import List = java.util.List;
-import ArrayList = java.util.ArrayList;
 

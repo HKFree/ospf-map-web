@@ -3,6 +3,14 @@ import { Constants } from '../Constants';
 import { MapModel } from '../map/MapModel';
 import { GPSPoint } from '../../tools/geo/GPSPoint';
 import { IpComparator } from '../../tools/ip/IpComparator';
+import { StubLink } from './StubLink';
+import { Router } from './Router';
+import { Link } from './Link';
+import {java, javaemul} from "j4ts";
+import List = java.util.List;
+import ArrayList = java.util.ArrayList;
+import Collections = java.util.Collections;
+import StringHelper = javaemul.internal.StringHelper;
 
 /**
  * Třída představující OspfModel v podobě uzlů (routerů) a spojů do kterých tyto
@@ -44,6 +52,9 @@ export class OspfModel {
      * @param {string} ip
      */
     public addRouter(ip: string) {
+        if (ip === ("")){
+            throw new Error("Router IP/ID is empty");
+        }
         let existuje: boolean = false;
         let pozice: number = 0;
         for(let i: number = 0; i < this.routers.size(); i++) {{
@@ -122,7 +133,7 @@ export class OspfModel {
      * Metoda, která seřadí seznam routerů dle IP adres
      */
     public sortRoutersByIP() {
-        Collections.sort<any>(this.routers, ((funcInst: any) => { if (typeof funcInst == 'function') { return funcInst } return (arg0, arg1) =>  (funcInst['compare'] ? funcInst['compare'] : funcInst) .call(funcInst, arg0, arg1)})(new IpComparator()));
+        Collections.sort<any>(this.routers, ((funcInst: any) => { if (typeof funcInst == 'function') { return funcInst } return (arg0: Router, arg1: Router) =>  (funcInst['compare'] ? funcInst['compare'] : funcInst) .call(funcInst, arg0, arg1)})(new IpComparator()));
     }
 
     /**
@@ -347,8 +358,8 @@ export class OspfModel {
                     cost2 = link.getOspfLinkData$().get(1).getCostIPv4();
                     cost1IPv6 = link.getOspfLinkData$().get(0).getCostIPv6();
                     cost2IPv6 = link.getOspfLinkData$().get(1).getCostIPv6();
-                    const gp1: GPSPoint | null | undefined = link.getOspfLinkData$().get(0).getRouter()?.getGpsPosition();
-                    const gp2: GPSPoint | null | undefined = link.getOspfLinkData$().get(1).getRouter()?.getGpsPosition();
+                    const gp1: GPSPoint | null = link.getOspfLinkData$().get(0).getRouter()?.getGpsPosition() ?? null;
+                    const gp2: GPSPoint | null = link.getOspfLinkData$().get(1).getRouter()?.getGpsPosition() ?? null;
                     mapModel.addLinkEdge$java_lang_String$java_lang_String$java_lang_String$java_lang_String$int$int$int$int$org_hkfree_ospf_tools_geo_GPSPoint$org_hkfree_ospf_tools_geo_GPSPoint$java_lang_String$java_lang_String$java_util_List(id1, id2, descr1, descr2, cost1, cost2, cost1IPv6, cost2IPv6, gp1, gp2, link.getLinkIDv4(), link.getLinkIDv6(), link.getOspfLinkData$());
                 } else {
                     multilinkCount++;
@@ -357,7 +368,7 @@ export class OspfModel {
                         let old = index.next();
                         {
                             id1 = old.getRouter()?.getId() ?? "";
-                            const gp: GPSPoint = old.getRouter()?.getGpsPosition();
+                            const gp: GPSPoint | null = old.getRouter()?.getGpsPosition() ?? null;
                             if (!(old.getRouter()?.getName() ?? "" === (""))){
                                 descr1 = old.getRouter()?.getName() ?? "";
                             } else {
@@ -372,23 +383,4 @@ export class OspfModel {
         return mapModel;
     }
 }
-
-
-
-
-import { OspfLinkData } from './OspfLinkData';
-
-
-import { StubLink } from './StubLink';
-
-
-import { Router } from './Router';
-
-
-import { Link } from './Link';
-import {java, javaemul} from "j4ts";
-import List = java.util.List;
-import ArrayList = java.util.ArrayList;
-import Collections = java.util.Collections;
-import StringHelper = javaemul.internal.StringHelper;
 

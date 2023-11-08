@@ -1,5 +1,11 @@
 /* Generated from Java with JSweet 3.1.0 - http://www.jsweet.org */
 import { IpCalculator } from '../../tools/ip/IpCalculator';
+import { Router } from './Router';
+import { OspfLinkData } from './OspfLinkData';
+import {java, javaemul} from "j4ts";
+import List = java.util.List;
+import ArrayList = java.util.ArrayList;
+import StringHelper = javaemul.internal.StringHelper;
 
 /**
  * Konstruktor - vytvoří instanci třídy
@@ -296,12 +302,4 @@ export class Link {
 
 
 
-import { Router } from './Router';
-
-
-import { OspfLinkData } from './OspfLinkData';
-import {java, javaemul} from "j4ts";
-import List = java.util.List;
-import ArrayList = java.util.ArrayList;
-import StringHelper = javaemul.internal.StringHelper;
 
