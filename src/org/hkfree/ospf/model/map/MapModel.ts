@@ -28,6 +28,13 @@ export class MapModel implements IMapModel {
     }
 
     public addLinkEdge$java_lang_String$java_lang_String$java_lang_String$java_lang_String$int$int$int$int$org_hkfree_ospf_tools_geo_GPSPoint$org_hkfree_ospf_tools_geo_GPSPoint$java_lang_String$java_lang_String$java_util_List(id1: string, id2: string, name1: string, name2: string, cost1: number, cost2: number, cost1IPv6: number, cost2IPv6: number, gpsP1: GPSPoint | null, gpsP2: GPSPoint | null, linkIDv4: string, linkIDv6: string, ospfLinksData: List<OspfLinkData>) {
+        if (id1 === "" || id2 === ""){
+            throw new Error("Router ID is empty!");
+        }
+        if (name1 === "" || name2 === ""){
+            debugger;
+            throw new Error("Router Name is empty!");
+        }
         let rv1: RouterVertex | null = this.getRouterVertexById(id1);
         let rv2: RouterVertex | null = this.getRouterVertexById(id2);
         if (rv1 == null){

@@ -134,7 +134,7 @@ export class Link {
         for(let index=this.routersOfLink.iterator();index.hasNext();) {
             let old = index.next();
             {
-                if (old.getRouter()?.getId() ?? "" === routerId){
+                if ((old.getRouter()?.getId() ?? "") === routerId){
                     return old;
                 }
             }
@@ -293,7 +293,7 @@ export class Link {
             return false;
         }
         for(let i: number = 0; i < routers.size(); i++) {{
-            if (!(this.routersOfLink.get(i).getRouter()?.getId() ?? "" === routers.get(i).getRouter()?.getId() ?? ""))return false;
+            if (!((this.routersOfLink.get(i).getRouter()?.getId() ?? "") === (routers.get(i).getRouter()?.getId() ?? "")))return false;
         };}
         return true;
     }

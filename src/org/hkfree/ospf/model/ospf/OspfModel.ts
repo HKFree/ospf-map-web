@@ -344,12 +344,12 @@ export class OspfModel {
                 if (link.getRoutersCount() === 2){
                     id1 = link.getOspfLinkData$().get(0).getRouter()?.getId() ?? "";
                     id2 = link.getOspfLinkData$().get(1).getRouter()?.getId() ?? "";
-                    if (link.getOspfLinkData$().get(0).getRouter()?.getName() ?? "" === ("")){
+                    if ((link.getOspfLinkData$().get(0).getRouter()?.getName() ?? "") === ("")){
                         descr1 = link.getOspfLinkData$().get(0).getRouter()?.getId() ?? "";
                     } else {
                         descr1 = link.getOspfLinkData$().get(0).getRouter()?.getName() ?? "";
                     }
-                    if (link.getOspfLinkData$().get(1).getRouter()?.getName() ?? "" === ("")){
+                    if ((link.getOspfLinkData$().get(1).getRouter()?.getName() ?? "") === ("")){
                         descr2 = link.getOspfLinkData$().get(1).getRouter()?.getId() ?? "";
                     } else {
                         descr2 = link.getOspfLinkData$().get(1).getRouter()?.getName() ?? "";
@@ -369,7 +369,7 @@ export class OspfModel {
                         {
                             id1 = old.getRouter()?.getId() ?? "";
                             const gp: GPSPoint | null = old.getRouter()?.getGpsPosition() ?? null;
-                            if (!(old.getRouter()?.getName() ?? "" === (""))){
+                            if (!((old.getRouter()?.getName() ?? "") === (""))){
                                 descr1 = old.getRouter()?.getName() ?? "";
                             } else {
                                 descr1 = old.getRouter()?.getId() ?? "";
