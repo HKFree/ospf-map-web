@@ -125,6 +125,17 @@ export function D3Renderer(props: { mapModel: MapModel}) {
                 link.attr("display", "block");
             });
 
+        const nodeLabel = svg.append("g")
+            .attr("stroke", "#fff")
+            //.attr("stroke-width", 0.)
+            .selectAll()
+            .data<FDGNode>(nodes)
+            .join("text")
+            .style("font-size", "10px")
+            .style("font-weight", "normal")
+            .text(function(d){return d.id})
+
+
         // const nodeLabels = var text = svg.a
         //     .data(data).enter().append("text")
         //     .attr("x", function(d) {
@@ -148,7 +159,7 @@ export function D3Renderer(props: { mapModel: MapModel}) {
         //     .attr("y", 3);
 
         function ticked() {
-            console.log("ticked");
+            console.log("force simulation ticked");
             link
                 .attr("x1", d => (d.source as FDGNode).x!)
                 .attr("y1", d => (d.source as FDGNode).y!)
@@ -158,6 +169,10 @@ export function D3Renderer(props: { mapModel: MapModel}) {
             node
                 .attr("cx", d => d.x!)
                 .attr("cy", d => d.y!);
+
+            nodeLabel
+                .attr("x", d => d.x! + 10)
+                .attr("y", d => d.y! + 3);
         }
 
 
